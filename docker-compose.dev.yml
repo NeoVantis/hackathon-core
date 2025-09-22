@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database for Development
+  postgres:
+    image: postgres:15-alpine
+    container_name: hackathon-postgres-dev
+    environment:
+      POSTGRES_DB: hackathon_db
+      POSTGRES_USER: hackathon_user
+      POSTGRES_PASSWORD: hackathon_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_dev_data:/var/lib/postgresql/data
+    networks:
+      - hackathon-dev-network
+
+  # Redis for Development
+  redis:
+    image: redis:7-alpine
+    container_name: hackathon-redis-dev
+    ports:
+      - "6379:6379"
+    networks:
+      - hackathon-dev-network
+
+volumes:
+  postgres_dev_data:
+
+networks:
+  hackathon-dev-network:
+    driver: bridge
